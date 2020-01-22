@@ -1,0 +1,17 @@
+{
+  "name": "appcms-js-sdk",
+  "version": "1.0.0",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "build:watch": "tsc -w"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node-fetch": "^2.5.4",
+    "typescript": "^3.7.5"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.0"
+  }
+}
