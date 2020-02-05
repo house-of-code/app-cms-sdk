@@ -5,7 +5,9 @@ export interface AppCMSClientConfig {
 export declare class AppCMSClient<Content> {
     private clientConfig;
     private baseURL;
+    private accessToken;
     constructor(clientConfig: AppCMSClientConfig);
+    setAccessToken: (token: string) => void;
     private generateURL;
     private makeRequest;
     get analytics(): {
@@ -17,5 +19,9 @@ export declare class AppCMSClient<Content> {
     get content(): {
         fetch: (locale: string) => Promise<Content>;
         file: (fileId: string) => Promise<Content>;
+    };
+    get vinduesgrossisten(): {
+        login: (accessKey: string) => Promise<Content>;
+        tasks: (date: string) => Promise<Content>;
     };
 }

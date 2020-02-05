@@ -1,4 +1,4 @@
-import fetch from 'node-fetch'
+import fetch, {RequestInit} from 'node-fetch'
 
 export interface AppCMSClientConfig {
     apiKey: string
@@ -9,6 +9,7 @@ export interface AppCMSClientConfig {
 export class AppCMSClient<Content> {
 
     private baseURL: string = "https://www.appcms.dk"
+    private accessToken: string = ''
 
     constructor(
         private clientConfig: AppCMSClientConfig
@@ -18,6 +19,10 @@ export class AppCMSClient<Content> {
             this.baseURL = clientConfig.baseUrl
         }
 
+    }
+
+    public setAccessToken = (token: string) => {
+        this.accessToken = token
     }
 
     private generateURL = (endpoint: string, withAPIKey: boolean = true) => {
@@ -37,9 +42,12 @@ export class AppCMSClient<Content> {
     private makeRequest = async (url: string, method="get", data?: any): Promise<Content> => {
         const requestOptions: RequestInit = {
             method,
+            headers: {},
         }
 
-
+        if(this.accessToken.length > 0) {
+            requestOptions.headers["authorization"] = `Bearer ${this.accessToken}`
+        }
 
 
 
@@ -49,10 +57,7 @@ export class AppCMSClient<Content> {
             case 'put':
                 requestOptions.method = method
                 requestOptions.body = JSON.stringify(data)
-
-                requestOptions.headers = {
-                    'content-type': 'application/json'
-                }
+                requestOptions.headers['content-type'] = 'application/json'
 
                 break
         }
@@ -60,12 +65,13 @@ export class AppCMSClient<Content> {
         console.log(`[Request] init - ${url} - ${method} - ${JSON.stringify(data)} - ${JSON.stringify(requestOptions.headers)}`)
 
 
-        const response = await fetch(url)
-        const contentType = response.headers["content-type"]
+        const response = await fetch(url, requestOptions)
+        const contentType: string|undefined = response.headers["content-type"]
 
-        const text = await response.text()
+        if(contentType && contentType.toLowerCase() !== "application/json") {
+            const text = await response.text()
 
-        console.log("Text", text)
+        }
 
         const json = await response.json()
 
@@ -105,6 +111,18 @@ export class AppCMSClient<Content> {
             },
             file: (fileId: string) => {
                 return this.makeRequest(this.generateURL(`/content/file/${fileId}`))
+            }
+        }
+    }
+
+
+    get vinduesgrossisten() {
+        return {
+            login: (accessKey: string) => {
+                return this.makeRequest(this.generateURL(`/vinduesgrossisten/engineer-login`), "post", {access_key: accessKey})
+            },
+            tasks: (date: string) => {
+                return this.makeRequest(this.generateURL(`/vinduesgrossisten/tasks?date=${date}`))
             }
         }
     }
