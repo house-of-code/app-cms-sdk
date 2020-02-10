@@ -23,5 +23,6 @@ export declare class AppCMSClient<Content> {
     get vinduesgrossisten(): {
         login: (accessKey: string) => Promise<Content>;
         tasks: (date: string) => Promise<Content>;
+        statuses: () => Promise<Content>;
     };
 }
