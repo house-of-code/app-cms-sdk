@@ -117,12 +117,19 @@ export class AppCMSClient<Content> {
 
 
     get vinduesgrossisten() {
+        function tasks(date: string) {
+            return this.makeRequest(this.generateURL(`/vinduesgrossisten/tasks?date=${date}`))
+        }
+
         return {
             login: (accessKey: string) => {
                 return this.makeRequest(this.generateURL(`/vinduesgrossisten/engineer-login`), "post", {access_key: accessKey})
             },
             tasks: (date: string) => {
                 return this.makeRequest(this.generateURL(`/vinduesgrossisten/tasks?date=${date}`))
+            },
+            tasksUpdateStatus: (taskId: string|number, statusId: string)  => {
+                return this.makeRequest(this.generateURL(`/vinduesgrossisten/tasks/${taskId}/status`), "put", {vin_status_id: statusId})
             },
             statuses: () => {
                 return this.makeRequest(this.generateURL(`/vinduesgrossisten/statuses`))
@@ -131,3 +138,4 @@ export class AppCMSClient<Content> {
     }
 
 }
+
