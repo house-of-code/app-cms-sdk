@@ -123,6 +123,9 @@ export class AppCMSClient<Content> {
             },
             tasks: (date: string) => {
                 return this.makeRequest(this.generateURL(`/vinduesgrossisten/tasks?date=${date}`))
+            },
+            statuses: () => {
+                return this.makeRequest(this.generateURL(`/vinduesgrossisten/statuses`))
             }
         }
     }
