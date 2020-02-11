@@ -1,3 +1,4 @@
+import * as FormData from 'form-data';
 export interface AppCMSClientConfig {
     apiKey: string;
     baseUrl?: string;
@@ -23,11 +24,20 @@ export declare class AppCMSClient<Content> {
     get vinduesgrossisten(): {
         login: (accessKey: string) => Promise<Content>;
         tasks: (date: string) => Promise<Content>;
-        taskUpdate: (taskId: string, note: string) => Promise<Content>;
+        taskUpdate: (taskId: string, values: {
+            note?: string;
+            materials?: string;
+        }) => Promise<Content>;
         tasksUpdateStatus: (taskId: string | number, statusId: string, note: string) => Promise<Content>;
         statuses: () => Promise<Content>;
         notes: (taskId: string | number) => {
             get(): void;
         };
+        taskCreateDocumentations(taskId: string | number, data: FormData): Promise<Content>;
+        taskUpdateDocumentations(taskId: string | number, values: {
+            note?: string;
+        }): Promise<Content>;
+        taskDeleteDocumentation(taskId: string | number, documentationId: string | number): Promise<Content>;
+        taskDeleteDocumentationImage(taskId: string | number, documentationId: string | number, imageId: string | number): Promise<Content>;
     };
 }

@@ -1,4 +1,6 @@
 import fetch, {RequestInit} from 'node-fetch'
+import * as FormData from 'form-data'
+import * as FileList from 'node-filelist'
 
 export interface AppCMSClientConfig {
     apiKey: string
@@ -56,8 +58,15 @@ export class AppCMSClient<Content> {
             case "patch":
             case 'put':
                 requestOptions.method = method
-                requestOptions.body = JSON.stringify(data)
-                requestOptions.headers['content-type'] = 'application/json'
+
+                if(data instanceof FormData) {
+                    requestOptions.body = data
+                }
+                else {
+                    requestOptions.body = JSON.stringify(data)
+                    requestOptions.headers['content-type'] = 'application/json'
+                }
+
 
                 break
         }
@@ -117,6 +126,7 @@ export class AppCMSClient<Content> {
 
 
     get vinduesgrossisten() {
+        const self = this
         function tasks(date: string) {
             return this.makeRequest(this.generateURL(`/vinduesgrossisten/tasks?date=${date}`))
         }
@@ -128,8 +138,8 @@ export class AppCMSClient<Content> {
             tasks: (date: string) => {
                 return this.makeRequest(this.generateURL(`/vinduesgrossisten/tasks?date=${date}`))
             },
-            taskUpdate: (taskId: string, note: string) => {
-                return this.makeRequest(this.generateURL(`/vinduesgrossisten/tasks/${taskId}`), "patch", {note})
+            taskUpdate: (taskId: string, values: {note?: string, materials?: string}) => {
+                return this.makeRequest(this.generateURL(`/vinduesgrossisten/tasks/${taskId}`), "patch", values)
             },
             tasksUpdateStatus: (taskId: string|number, statusId: string, note: string)  => {
                 return this.makeRequest(this.generateURL(`/vinduesgrossisten/tasks/${taskId}/status`), "put", {vin_status_id: statusId, note})
@@ -150,7 +160,24 @@ export class AppCMSClient<Content> {
 
                     }
                 }
-            }
+            },
+
+
+            taskCreateDocumentations(taskId: number|string, data: FormData) {
+                return self.makeRequest(self.generateURL(`/vinduesgrossisten/tasks/${taskId}/documentations`), 'post', data)
+            },
+
+            taskUpdateDocumentations(taskId: number|string, values: {note?: string}) {
+                return self.makeRequest(self.generateURL(`/vinduesgrossisten/tasks/${taskId}/documentations`), 'patch', values)
+            },
+
+            taskDeleteDocumentation(taskId: number|string, documentationId: string|number) {
+                return self.makeRequest(self.generateURL(`/vinduesgrossisten/tasks/${taskId}/documentations/${documentationId}`), "delete")
+            },
+
+            taskDeleteDocumentationImage(taskId: number|string, documentationId: string|number, imageId: string|number) {
+                return self.makeRequest(self.generateURL(`/vinduesgrossisten/tasks/${taskId}/documentations/${documentationId}/images/${imageId}`), "delete")
+            },
         }
     }
 
