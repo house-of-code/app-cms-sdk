@@ -128,11 +128,28 @@ export class AppCMSClient<Content> {
             tasks: (date: string) => {
                 return this.makeRequest(this.generateURL(`/vinduesgrossisten/tasks?date=${date}`))
             },
-            tasksUpdateStatus: (taskId: string|number, statusId: string)  => {
-                return this.makeRequest(this.generateURL(`/vinduesgrossisten/tasks/${taskId}/status`), "put", {vin_status_id: statusId})
+            taskUpdate: (taskId: string, note: string) => {
+                return this.makeRequest(this.generateURL(`/vinduesgrossisten/tasks/${taskId}`), "patch", {note})
+            },
+            tasksUpdateStatus: (taskId: string|number, statusId: string, note: string)  => {
+                return this.makeRequest(this.generateURL(`/vinduesgrossisten/tasks/${taskId}/status`), "put", {vin_status_id: statusId, note})
             },
             statuses: () => {
                 return this.makeRequest(this.generateURL(`/vinduesgrossisten/statuses`))
+            },
+
+            notes: (taskId: string|number) => {
+                const baseUrl = this.generateURL(`/vinduesgrossisten/tasks/${taskId}/notes`)
+                const generateURL = (endpoint: string) => {
+                    return `${baseUrl}${endpoint}`
+                }
+
+
+                return {
+                    get() {
+
+                    }
+                }
             }
         }
     }
