@@ -175,6 +175,16 @@ export class AppCMSClient<Content> {
                 return self.makeRequest(self.generateURL(`/vinduesgrossisten/tasks/${taskId}/documentations/${documentationId}`), "delete")
             },
 
+            /**
+             *
+             * @param taskId
+             * @param documentationId
+             * @param image There is only one field in the object images[image] = file
+             */
+            taskAddDocumentationImage(taskId: number|string, documentationId: string|number, image: FormData) {
+                return self.makeRequest(self.generateURL(`/vinduesgrossisten/tasks/${taskId}/documentations/${documentationId}/images`), "post", image)
+            },
+
             taskDeleteDocumentationImage(taskId: number|string, documentationId: string|number, imageId: string|number) {
                 return self.makeRequest(self.generateURL(`/vinduesgrossisten/tasks/${taskId}/documentations/${documentationId}/images/${imageId}`), "delete")
             },

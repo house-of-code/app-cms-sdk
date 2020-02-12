@@ -38,6 +38,13 @@ export declare class AppCMSClient<Content> {
             note?: string;
         }): Promise<Content>;
         taskDeleteDocumentation(taskId: string | number, documentationId: string | number): Promise<Content>;
+        /**
+         *
+         * @param taskId
+         * @param documentationId
+         * @param image There is only one field in the object images[image] = file
+         */
+        taskAddDocumentationImage(taskId: string | number, documentationId: string | number, image: FormData): Promise<Content>;
         taskDeleteDocumentationImage(taskId: string | number, documentationId: string | number, imageId: string | number): Promise<Content>;
     };
 }
