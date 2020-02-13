@@ -30,21 +30,10 @@ export declare class AppCMSClient<Content> {
         }) => Promise<Content>;
         tasksUpdateStatus: (taskId: string | number, statusId: string, note: string) => Promise<Content>;
         statuses: () => Promise<Content>;
-        notes: (taskId: string | number) => {
-            get(): void;
-        };
         taskCreateDocumentations(taskId: string | number, data: FormData): Promise<Content>;
-        taskUpdateDocumentations(taskId: string | number, values: {
+        taskUpdateDocumentations(taskId: string | number, documentationId: string | number, values: {
             note?: string;
         }): Promise<Content>;
         taskDeleteDocumentation(taskId: string | number, documentationId: string | number): Promise<Content>;
-        /**
-         *
-         * @param taskId
-         * @param documentationId
-         * @param image There is only one field in the object images[image] = file
-         */
-        taskAddDocumentationImage(taskId: string | number, documentationId: string | number, image: FormData): Promise<Content>;
-        taskDeleteDocumentationImage(taskId: string | number, documentationId: string | number, imageId: string | number): Promise<Content>;
     };
 }

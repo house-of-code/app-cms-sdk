@@ -147,46 +147,14 @@ export class AppCMSClient<Content> {
             statuses: () => {
                 return this.makeRequest(this.generateURL(`/vinduesgrossisten/statuses`))
             },
-
-            notes: (taskId: string|number) => {
-                const baseUrl = this.generateURL(`/vinduesgrossisten/tasks/${taskId}/notes`)
-                const generateURL = (endpoint: string) => {
-                    return `${baseUrl}${endpoint}`
-                }
-
-
-                return {
-                    get() {
-
-                    }
-                }
-            },
-
-
             taskCreateDocumentations(taskId: number|string, data: FormData) {
                 return self.makeRequest(self.generateURL(`/vinduesgrossisten/tasks/${taskId}/documentations`), 'post', data)
             },
-
-            taskUpdateDocumentations(taskId: number|string, values: {note?: string}) {
-                return self.makeRequest(self.generateURL(`/vinduesgrossisten/tasks/${taskId}/documentations`), 'patch', values)
+            taskUpdateDocumentations(taskId: number|string, documentationId: string|number, values: {note?: string}) {
+                return self.makeRequest(self.generateURL(`/vinduesgrossisten/tasks/${taskId}/documentations/${documentationId}`), 'patch', values)
             },
-
             taskDeleteDocumentation(taskId: number|string, documentationId: string|number) {
                 return self.makeRequest(self.generateURL(`/vinduesgrossisten/tasks/${taskId}/documentations/${documentationId}`), "delete")
-            },
-
-            /**
-             *
-             * @param taskId
-             * @param documentationId
-             * @param image There is only one field in the object images[image] = file
-             */
-            taskAddDocumentationImage(taskId: number|string, documentationId: string|number, image: FormData) {
-                return self.makeRequest(self.generateURL(`/vinduesgrossisten/tasks/${taskId}/documentations/${documentationId}/images`), "post", image)
-            },
-
-            taskDeleteDocumentationImage(taskId: number|string, documentationId: string|number, imageId: string|number) {
-                return self.makeRequest(self.generateURL(`/vinduesgrossisten/tasks/${taskId}/documentations/${documentationId}/images/${imageId}`), "delete")
             },
         }
     }
