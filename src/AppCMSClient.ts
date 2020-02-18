@@ -1,6 +1,6 @@
 import fetch, {RequestInit} from 'node-fetch'
 import * as FormData from 'form-data'
-import * as FileList from 'node-filelist'
+import * as querystring from 'querystring'
 
 export interface AppCMSClientConfig {
     apiKey: string
@@ -27,18 +27,28 @@ export class AppCMSClient<Content> {
         this.accessToken = token
     }
 
-    private generateURL = (endpoint: string, withAPIKey: boolean = true) => {
+    private generateURL = (endpoint: string, withAPIKey: boolean = true, params?: {[key: string]: string}) => {
         let url = `${this.baseURL}`
+        let queryParams = ""
+
+        if(params) {
+            queryParams = querystring.encode(params)
+            console.log("Generated params", queryParams)
+        }
+
+
+
+
 
         if(withAPIKey) {
             url += `/api/${this.clientConfig.apiKey}`
         }
 
         if(endpoint.charAt(0) !== "/") {
-            return `${url}/${endpoint}`
+            return `${url}/${endpoint}?${queryParams}`
         }
 
-        return `${url}${endpoint}`
+        return `${url}${endpoint}?${queryParams}`
     }
 
     private makeRequest = async (url: string, method="get", data?: any): Promise<Content> => {
@@ -152,6 +162,26 @@ export class AppCMSClient<Content> {
             },
             taskUpdateDocumentations(taskId: number|string, documentationId: string|number, values: {note?: string}) {
                 return self.makeRequest(self.generateURL(`/vinduesgrossisten/tasks/${taskId}/documentations/${documentationId}`), 'patch', values)
+            },
+            taskDocumentationImage(taskId: string|number, documentationId: string| number, config: {width?: number, height?: string, crop?: boolean}) {
+                const params : any = {}
+                if(config.hasOwnProperty('width')) {
+                    params.w = config.width
+                }
+
+                if(config.hasOwnProperty('height')) {
+                    params.h = config.height
+                }
+
+                if(config.hasOwnProperty('crop')) {
+                    params.crop = config.crop
+                }
+
+                const url = self.generateURL(`/vinduesgrossisten/tasks/${taskId}/documentations/${documentationId}/image`, true, params)
+                console.log(`URL`, url)
+
+
+
             },
             taskDeleteDocumentation(taskId: number|string, documentationId: string|number) {
                 return self.makeRequest(self.generateURL(`/vinduesgrossisten/tasks/${taskId}/documentations/${documentationId}`), "delete")

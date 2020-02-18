@@ -34,6 +34,11 @@ export declare class AppCMSClient<Content> {
         taskUpdateDocumentations(taskId: string | number, documentationId: string | number, values: {
             note?: string;
         }): Promise<Content>;
+        taskDocumentationImage(taskId: string | number, documentationId: string | number, config: {
+            width?: number;
+            height?: string;
+            crop?: boolean;
+        }): void;
         taskDeleteDocumentation(taskId: string | number, documentationId: string | number): Promise<Content>;
     };
 }
