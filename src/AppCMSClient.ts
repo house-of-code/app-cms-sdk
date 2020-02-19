@@ -163,7 +163,7 @@ export class AppCMSClient<Content> {
             taskUpdateDocumentations(taskId: number|string, documentationId: string|number, values: {note?: string}) {
                 return self.makeRequest(self.generateURL(`/vinduesgrossisten/tasks/${taskId}/documentations/${documentationId}`), 'patch', values)
             },
-            taskDocumentationImage(taskId: string|number, documentationId: string| number, config: {width?: number, height?: string, crop?: boolean}) {
+            taskDocumentationImage(taskId: string|number, documentationId: string| number, config: {width?: string|number, height?: string|number, crop?: boolean}) {
                 const params : any = {}
                 if(config.hasOwnProperty('width')) {
                     params.w = config.width
@@ -178,9 +178,8 @@ export class AppCMSClient<Content> {
                 }
 
                 const url = self.generateURL(`/vinduesgrossisten/tasks/${taskId}/documentations/${documentationId}/image`, true, params)
-                console.log(`URL`, url)
 
-
+                return self.makeRequest(url)
 
             },
             taskDeleteDocumentation(taskId: number|string, documentationId: string|number) {

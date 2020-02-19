@@ -35,10 +35,10 @@ export declare class AppCMSClient<Content> {
             note?: string;
         }): Promise<Content>;
         taskDocumentationImage(taskId: string | number, documentationId: string | number, config: {
-            width?: number;
-            height?: string;
+            width?: string | number;
+            height?: string | number;
             crop?: boolean;
-        }): void;
+        }): Promise<Content>;
         taskDeleteDocumentation(taskId: string | number, documentationId: string | number): Promise<Content>;
     };
 }
