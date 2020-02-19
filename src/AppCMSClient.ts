@@ -1,6 +1,6 @@
 import fetch, {RequestInit} from 'node-fetch'
 import * as FormData from 'form-data'
-import * as querystring from 'querystring'
+import * as querystring from 'query-string'
 
 export interface AppCMSClientConfig {
     apiKey: string
@@ -32,7 +32,7 @@ export class AppCMSClient<Content> {
         let queryParams = ""
 
         if(params) {
-            queryParams = querystring.encode(params)
+            queryParams = querystring.stringify(params)
             console.log("Generated params", queryParams)
         }
 
