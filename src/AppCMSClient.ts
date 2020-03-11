@@ -21,6 +21,8 @@ export class AppCMSClient<Content> {
             this.baseURL = clientConfig.baseUrl
         }
 
+        this.accessToken = ''
+
     }
 
     public setAccessToken = (token: string) => {
@@ -151,8 +153,8 @@ export class AppCMSClient<Content> {
             taskUpdate: (taskId: string, values: {note?: string, materials?: string}) => {
                 return this.makeRequest(this.generateURL(`/vinduesgrossisten/tasks/${taskId}`), "patch", values)
             },
-            tasksUpdateStatus: (taskId: string|number, statusId: string, note: string)  => {
-                return this.makeRequest(this.generateURL(`/vinduesgrossisten/tasks/${taskId}/status`), "put", {vin_status_id: statusId, note})
+            tasksUpdateStatus: (taskId: string|number, statusId: string, note: string, delay?: number)  => {
+                return this.makeRequest(this.generateURL(`/vinduesgrossisten/tasks/${taskId}/status`), "put", {vin_status_id: statusId, note, delay})
             },
             statuses: () => {
                 return this.makeRequest(this.generateURL(`/vinduesgrossisten/statuses`))

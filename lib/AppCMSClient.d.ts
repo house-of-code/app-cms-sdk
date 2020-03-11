@@ -28,7 +28,7 @@ export declare class AppCMSClient<Content> {
             note?: string;
             materials?: string;
         }) => Promise<Content>;
-        tasksUpdateStatus: (taskId: string | number, statusId: string, note: string) => Promise<Content>;
+        tasksUpdateStatus: (taskId: string | number, statusId: string, note: string, delay?: number) => Promise<Content>;
         statuses: () => Promise<Content>;
         taskCreateDocumentations(taskId: string | number, data: FormData): Promise<Content>;
         taskUpdateDocumentations(taskId: string | number, documentationId: string | number, values: {
