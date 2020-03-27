@@ -41,4 +41,29 @@ export declare class AppCMSClient<Content> {
         }): Promise<Content>;
         taskDeleteDocumentation(taskId: string | number, documentationId: string | number): Promise<Content>;
     };
+    get cphtrucking(): {
+        login: (accessKey: string) => Promise<Content>;
+        tasks: (date: string) => Promise<Content>;
+        taskUpdate: (taskId: string, values: {
+            note?: string;
+            materials?: string;
+        }) => Promise<Content>;
+        tasksUpdateStatus: (taskId: string | number, statusId: string, note: string, delay?: number) => Promise<Content>;
+        statuses: () => Promise<Content>;
+        taskCreateDocumentations(taskId: string | number, data: FormData): Promise<Content>;
+        taskUpdateDocumentations(taskId: string | number, documentationId: string | number, values: {
+            note?: string;
+        }): Promise<Content>;
+        taskDocumentationImage(taskId: string | number, documentationId: string | number, config: {
+            width?: string | number;
+            height?: string | number;
+            crop?: boolean;
+        }): Promise<Content>;
+        taskDeleteDocumentation(taskId: string | number, documentationId: string | number): Promise<Content>;
+        taskStart: (taskId: string | number) => Promise<Content>;
+        taskEnd: (taskId: string | number) => Promise<Content>;
+        shiftStart: () => Promise<Content>;
+        shiftEnd: () => Promise<Content>;
+        taskCreate: (taskDate: Date, customerId: string | number, taskName: string, destinationStreetAddress: string, destinationCity: string, destinationPostalCode: string, statusId: string, orderTypeId: string | number, estimate: number, description: string, note: string, taskId: string) => Promise<Content>;
+    };
 }
