@@ -200,6 +200,9 @@ export class AppCMSClient<Content> {
             login: (accessKey: string) => {
                 return this.makeRequest(this.generateURL(`/cphtrucking/engineer-login`), "post", {access_key: accessKey})
             },
+            customers: () => {
+                return this.makeRequest(this.generateURL(`/cphtrucking/customers`))
+            },
             tasks: (date: string) => {
                 return this.makeRequest(this.generateURL(`/cphtrucking/tasks?date=${date}`))
             },
@@ -246,39 +249,75 @@ export class AppCMSClient<Content> {
             taskEnd: (taskId: number|string) => {
                 return this.makeRequest(this.generateURL(`/cphtrucking/tasks/${taskId}/end`), "patch")
             },
-            shiftStart: () => {
+            addresses: () => {
+                return this.makeRequest(this.generateURL(`/cphtrucking/addresses`))
+            },
+            workshift: () => {
+                return this.makeRequest(this.generateURL(`/cphtrucking/workshift`))
+            },
+            workshiftStart: () => {
                 return this.makeRequest(this.generateURL(`/cphtrucking/start_workshift`), "patch")
             },
-            shiftEnd: () => {
+            workshiftEnd: () => {
                 return this.makeRequest(this.generateURL(`/cphtrucking/end_workshift`), "patch")
             },
-            taskCreate: (
-                taskDate: Date,
-                customerId: number|string,
-                taskName: string,
-                destinationStreetAddress: string,
-                destinationCity: string,
-                destinationPostalCode: string,
-                statusId: string,
-                orderTypeId: number|string,
-                estimate: number,
-                description: string,
-                note: string,
-                taskId: string
+            taskCreate: (task: {
+                id: number
+                type: string
+                description: string
+                estimate: number
+                task_id: string
+                task_date: string
+                task_name: string
+                task_type: string
+                is_delayed: boolean
+                ct_customer: {
+                    id: number
+                    name: string
+                    phone: string
+                    email: string
+                    address_street: string
+                    address_city: string
+                    address_postal_code: string
+                }
+                status_note: {
+                    id: number,
+                    ct_status: {
+                        id: number
+                        name: string
+                    }
+                    note: string
+                }
+                documentations: Array<{
+                    id: number
+                    doc_type: 'other'
+                    note:string
+                    image_path: string
+                }>
+                note: string
+                order_pdf: string
+                destination_street_address: string
+                destination_postal_code: string
+                destination_city: string,
+                pickup_street_address: string
+                pickup_postal_code: string
+                pickup_city: string
+                contact_person: string
+            }
             ) => {
                 return this.makeRequest(this.generateURL(`/cphtrucking/engineer-login`), "post", {ct_task: {
-                    task_date: taskDate.toISOString(),
-                    ct_customer_id: customerId,
-                    task_name: taskName,
-                    destinationStreetAddress: destinationStreetAddress,
-                    destination_postal_code: destinationPostalCode,
-                    destination_city: destinationCity,
-                    ct_status_id: statusId,
-                    ct_order_type_id: orderTypeId,
-                    estimate: estimate,
-                    description: description,
-                    note: note,
-                    task_id: taskId
+                    task_date: task.task_date,
+                    ct_customer_id: task.ct_customer.id,
+                    task_name: task.task_name,
+                    destinationStreetAddress: task.destination_street_address,
+                    destination_postal_code: task.destination_postal_code,
+                    destination_city: task.destination_city,
+                    ct_status_id: task.status_note.ct_status,
+                    ct_order_type_id: null,
+                    estimate: task.estimate,
+                    description: task.description,
+                    note: task.note,
+                    task_id: task.task_id
                 }})
             }
         }

@@ -43,6 +43,7 @@ export declare class AppCMSClient<Content> {
     };
     get cphtrucking(): {
         login: (accessKey: string) => Promise<Content>;
+        customers: () => Promise<Content>;
         tasks: (date: string) => Promise<Content>;
         taskUpdate: (taskId: string, values: {
             note?: string;
@@ -62,8 +63,52 @@ export declare class AppCMSClient<Content> {
         taskDeleteDocumentation(taskId: string | number, documentationId: string | number): Promise<Content>;
         taskStart: (taskId: string | number) => Promise<Content>;
         taskEnd: (taskId: string | number) => Promise<Content>;
-        shiftStart: () => Promise<Content>;
-        shiftEnd: () => Promise<Content>;
-        taskCreate: (taskDate: Date, customerId: string | number, taskName: string, destinationStreetAddress: string, destinationCity: string, destinationPostalCode: string, statusId: string, orderTypeId: string | number, estimate: number, description: string, note: string, taskId: string) => Promise<Content>;
+        addresses: () => Promise<Content>;
+        workshift: () => Promise<Content>;
+        workshiftStart: () => Promise<Content>;
+        workshiftEnd: () => Promise<Content>;
+        taskCreate: (task: {
+            id: number;
+            type: string;
+            description: string;
+            estimate: number;
+            task_id: string;
+            task_date: string;
+            task_name: string;
+            task_type: string;
+            is_delayed: boolean;
+            ct_customer: {
+                id: number;
+                name: string;
+                phone: string;
+                email: string;
+                address_street: string;
+                address_city: string;
+                address_postal_code: string;
+            };
+            status_note: {
+                id: number;
+                ct_status: {
+                    id: number;
+                    name: string;
+                };
+                note: string;
+            };
+            documentations: {
+                id: number;
+                doc_type: "other";
+                note: string;
+                image_path: string;
+            }[];
+            note: string;
+            order_pdf: string;
+            destination_street_address: string;
+            destination_postal_code: string;
+            destination_city: string;
+            pickup_street_address: string;
+            pickup_postal_code: string;
+            pickup_city: string;
+            contact_person: string;
+        }) => Promise<Content>;
     };
 }
