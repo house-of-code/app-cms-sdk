@@ -43,6 +43,7 @@ export declare class AppCMSClient<Content> {
     };
     get cphtrucking(): {
         login: (accessKey: string) => Promise<Content>;
+        customers: () => Promise<Content>;
         tasks: (date: string) => Promise<Content>;
         taskUpdate: (taskId: string, values: {
             note?: string;
@@ -62,8 +63,10 @@ export declare class AppCMSClient<Content> {
         taskDeleteDocumentation(taskId: string | number, documentationId: string | number): Promise<Content>;
         taskStart: (taskId: string | number) => Promise<Content>;
         taskEnd: (taskId: string | number) => Promise<Content>;
-        shiftStart: () => Promise<Content>;
-        shiftEnd: () => Promise<Content>;
-        taskCreate: (taskDate: Date, customerId: string | number, taskName: string, destinationStreetAddress: string, destinationCity: string, destinationPostalCode: string, statusId: string, orderTypeId: string | number, estimate: number, description: string, note: string, taskId: string) => Promise<Content>;
+        addresses: () => Promise<Content>;
+        workshift: () => Promise<Content>;
+        workshiftStart: () => Promise<Content>;
+        workshiftEnd: () => Promise<Content>;
+        taskCreate: (task: Task) => Promise<Content>;
     };
 }
