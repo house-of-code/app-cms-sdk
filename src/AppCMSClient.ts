@@ -1,6 +1,7 @@
 import fetch, {RequestInit} from 'node-fetch'
 import * as FormData from 'form-data'
 import * as querystring from 'query-string'
+import { Task } from './CtTask.type'
 
 export interface AppCMSClientConfig {
     apiKey: string
@@ -261,50 +262,7 @@ export class AppCMSClient<Content> {
             workshiftEnd: () => {
                 return this.makeRequest(this.generateURL(`/cphtrucking/end_workshift`), "patch")
             },
-            taskCreate: (task: {
-                id: number
-                type: string
-                description: string
-                estimate: number
-                task_id: string
-                task_date: string
-                task_name: string
-                task_type: string
-                is_delayed: boolean
-                ct_customer: {
-                    id: number
-                    name: string
-                    phone: string
-                    email: string
-                    address_street: string
-                    address_city: string
-                    address_postal_code: string
-                }
-                status_note: {
-                    id: number,
-                    ct_status: {
-                        id: number
-                        name: string
-                    }
-                    note: string
-                }
-                documentations: Array<{
-                    id: number
-                    doc_type: 'other'
-                    note:string
-                    image_path: string
-                }>
-                note: string
-                order_pdf: string
-                destination_street_address: string
-                destination_postal_code: string
-                destination_city: string,
-                pickup_street_address: string
-                pickup_postal_code: string
-                pickup_city: string
-                contact_person: string
-            }
-            ) => {
+            taskCreate: (task: Task) => {
                 return this.makeRequest(this.generateURL(`/cphtrucking/engineer-login`), "post", {ct_task: {
                     task_date: task.task_date,
                     ct_customer_id: task.ct_customer.id,
