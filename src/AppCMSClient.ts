@@ -1,7 +1,6 @@
 import fetch, {RequestInit} from 'node-fetch'
 import * as FormData from 'form-data'
 import * as querystring from 'query-string'
-import { Task } from './CtTask.type'
 
 export interface AppCMSClientConfig {
     apiKey: string

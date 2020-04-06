@@ -1,5 +1,4 @@
 import * as FormData from 'form-data';
-import { Task } from './CtTask.type';
 export interface AppCMSClientConfig {
     apiKey: string;
     baseUrl?: string;

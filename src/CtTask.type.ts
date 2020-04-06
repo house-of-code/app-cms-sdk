@@ -1,5 +1,5 @@
 // Type for CPH Trucking tasks
-export interface Task {
+declare interface Task {
     id: number
     type: string
     description: string
