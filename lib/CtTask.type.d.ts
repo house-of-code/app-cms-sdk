@@ -33,11 +33,24 @@ declare interface Task {
     }>;
     note: string;
     order_pdf: string;
-    destination_street_address: string;
-    destination_postal_code: string;
-    destination_city: string;
-    pickup_street_address: string;
-    pickup_postal_code: string;
-    pickup_city: string;
     contact_person: string;
+    contact_phone: string;
+    deliver_address: {
+        id: number;
+        name: string;
+        street_address: string;
+        city: string;
+        postal_code: string;
+        merged_address: string;
+    };
+    pickup_address: {
+        id: number;
+        name: string;
+        street_address: string;
+        city: string;
+        postal_code: string;
+        merged_address: string;
+    };
+    trip_started_time: string;
+    trip_ended_time: string;
 }
