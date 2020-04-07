@@ -88,10 +88,6 @@ export class AppCMSClient<Content> {
 
         const response = await fetch(url, requestOptions)
 
-        console.log('URL', url)
-        console.log('OPTIONS', requestOptions)
-        console.log('RESPONSE', response)
-
         const contentType: string|undefined = response.headers["content-type"]
 
         if(contentType && contentType.toLowerCase() !== "application/json") {
