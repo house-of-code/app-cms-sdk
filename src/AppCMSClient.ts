@@ -253,8 +253,11 @@ export class AppCMSClient<Content> {
             addresses: () => {
                 return this.makeRequest(this.generateURL(`/cphtrucking/addresses`))
             },
-            workshift: () => {
+            workshiftCurrent: () => {
                 return this.makeRequest(this.generateURL(`/cphtrucking/workshift`))
+            },
+            workshiftIndex: () => {
+                return this.makeRequest(this.generateURL(`/cphtrucking/workshifts`))
             },
             workshiftStart: () => {
                 return this.makeRequest(this.generateURL(`/cphtrucking/start_workshift`), "patch")
