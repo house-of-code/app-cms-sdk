@@ -12,11 +12,6 @@ declare interface Task {
     ct_customer: {
         id: number
         name: string
-        phone: string
-        email: string
-        address_street: string
-        address_city: string
-        address_postal_code: string
     }
     status_note: {
         id: number,
@@ -28,7 +23,7 @@ declare interface Task {
     }
     documentations: Array<{
         id: number
-        doc_type: 'other'
+        doc_type: 'other' | 'before' | 'after'
         note:string
         image_path: string
     }>
@@ -52,6 +47,13 @@ declare interface Task {
         postal_code: string,
         merged_address: string
     }
-    trip_started_time: string
-    trip_ended_time: string
+    worklogs: {
+        work_log_status: 'not-started' | 'started' | 'paused' | 'locked'
+        entities: Array<{
+            id: number
+            work_log_status: 'start' | 'pause' | 'end'
+            time_log: string
+        }>
+        time_spent: number
+    }
 }

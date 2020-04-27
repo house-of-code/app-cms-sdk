@@ -211,7 +211,7 @@ export class AppCMSClient<Content> {
                 return this.makeRequest(this.generateURL(`/cphtrucking/tasks/${taskId}`), "patch", values)
             },
             tasksUpdateStatus: (taskId: string|number, statusId: string, note: string, delay?: number)  => {
-                return this.makeRequest(this.generateURL(`/cphtrucking/tasks/${taskId}/status`), "put", {vin_status_id: statusId, note, delay})
+                return this.makeRequest(this.generateURL(`/cphtrucking/tasks/${taskId}/status`), "put", {ct_status_id: statusId, note, delay})
             },
             statuses: () => {
                 return this.makeRequest(this.generateURL(`/cphtrucking/statuses`))
@@ -253,8 +253,11 @@ export class AppCMSClient<Content> {
             addresses: () => {
                 return this.makeRequest(this.generateURL(`/cphtrucking/addresses`))
             },
-            workshift: () => {
+            workshiftCurrent: () => {
                 return this.makeRequest(this.generateURL(`/cphtrucking/workshift`))
+            },
+            workshiftIndex: () => {
+                return this.makeRequest(this.generateURL(`/cphtrucking/workshifts`))
             },
             workshiftStart: () => {
                 return this.makeRequest(this.generateURL(`/cphtrucking/start_workshift`), "patch")
@@ -279,7 +282,13 @@ export class AppCMSClient<Content> {
                     pickup_address_id: task.pickup_address.id,
                     deliver_address_id: task.deliver_address.id
                 }})
-            }
+            },
+            taskWorklogs: (taskId: number|string) => {
+                return this.makeRequest(this.generateURL(`/cphtrucking/tasks/${taskId}/work_logs`))
+            },
+            taskWorklogsSet: (taskId: number|string, status: 'start' | 'pause' | 'end' ) => {
+                return this.makeRequest(this.generateURL(`/cphtrucking/tasks/${taskId}/work_logs/${status}`), 'post')
+            } 
         }
     }
 
