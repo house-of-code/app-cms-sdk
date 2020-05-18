@@ -4,7 +4,6 @@ declare interface Task {
     type: string
     description: string
     estimate: number
-    task_id: string
     task_date: string
     task_name: string
     task_type: string

@@ -276,7 +276,6 @@ export class AppCMSClient<Content> {
                     estimate: task.estimate,
                     description: task.description,
                     note: task.note,
-                    task_id: task.task_id,
                     contact_person: task.contact_person,
                     contact_phone: task.contact_phone,
                     pickup_address_id: task.pickup_address.id,
