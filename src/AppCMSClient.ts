@@ -280,7 +280,7 @@ export class AppCMSClient<Content> {
                     description: task.description,
                     note: task.note,
                     task_id: task.task_id,
-                    contact_person: task.contact_person,
+                    ct_contact_person_id: task.contact_person.id,
                     pickup_address_id: task.pickup_address.id,
                     deliver_address_id: task.deliver_address.id
                 }})
