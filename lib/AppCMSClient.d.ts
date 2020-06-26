@@ -64,6 +64,7 @@ export declare class AppCMSClient<Content> {
         taskStart: (taskId: string | number) => Promise<Content>;
         taskEnd: (taskId: string | number) => Promise<Content>;
         addresses: () => Promise<Content>;
+        contactPersons: () => Promise<Content>;
         workshiftCurrent: () => Promise<Content>;
         workshiftIndex: () => Promise<Content>;
         workshiftStart: () => Promise<Content>;

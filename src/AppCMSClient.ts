@@ -253,6 +253,9 @@ export class AppCMSClient<Content> {
             addresses: () => {
                 return this.makeRequest(this.generateURL(`/cphtrucking/addresses`))
             },
+            contactPersons: () => {
+                return this.makeRequest(this.generateURL(`/cphtrucking/contact_persons`))
+            },
             workshiftCurrent: () => {
                 return this.makeRequest(this.generateURL(`/cphtrucking/workshift`))
             },
