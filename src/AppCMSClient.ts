@@ -5,6 +5,7 @@ import * as querystring from 'query-string'
 export interface AppCMSClientConfig {
     apiKey: string
     baseUrl?: string
+    language?: string
 
 }
 
@@ -12,17 +13,26 @@ export class AppCMSClient<Content> {
 
     private baseURL: string = "https://www.appcms.dk"
     private accessToken: string = ''
+    private language: string = 'en'
 
     constructor(
-        private clientConfig: AppCMSClientConfig
+        private clientConfig: AppCMSClientConfig,
     ) {
 
         if(clientConfig.baseUrl) {
             this.baseURL = clientConfig.baseUrl
         }
 
+        if(clientConfig.language) {
+            this.language = clientConfig.language
+        }
+
         this.accessToken = ''
 
+    }
+
+    public setLanguage = (language: string) => {
+        this.language = language
     }
 
     public setAccessToken = (token: string) => {
@@ -135,6 +145,10 @@ export class AppCMSClient<Content> {
                 return this.makeRequest(this.generateURL(`/content/file/${fileId}`))
             }
         }
+    }
+
+    translations = (locale: string) => {
+        return this.makeRequest("/translated_texts/" + this.language)
     }
 
 
@@ -288,7 +302,7 @@ export class AppCMSClient<Content> {
             },
             taskWorklogsSet: (taskId: number|string, status: 'start' | 'pause' | 'end' ) => {
                 return this.makeRequest(this.generateURL(`/cphtrucking/tasks/${taskId}/work_logs/${status}`), 'post')
-            } 
+            }
         }
     }
 
