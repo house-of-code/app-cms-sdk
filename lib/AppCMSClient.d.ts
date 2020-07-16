@@ -2,12 +2,15 @@ import * as FormData from 'form-data';
 export interface AppCMSClientConfig {
     apiKey: string;
     baseUrl?: string;
+    language?: string;
 }
 export declare class AppCMSClient<Content> {
     private clientConfig;
     private baseURL;
     private accessToken;
+    private language;
     constructor(clientConfig: AppCMSClientConfig);
+    setLanguage: (language: string) => void;
     setAccessToken: (token: string) => void;
     private generateURL;
     private makeRequest;
@@ -21,6 +24,7 @@ export declare class AppCMSClient<Content> {
         fetch: (locale: string) => Promise<Content>;
         file: (fileId: string) => Promise<Content>;
     };
+    translations: (locale: string) => Promise<Content>;
     get vinduesgrossisten(): {
         login: (accessKey: string) => Promise<Content>;
         tasks: (date: string) => Promise<Content>;
@@ -70,6 +74,6 @@ export declare class AppCMSClient<Content> {
         workshiftEnd: () => Promise<Content>;
         taskCreate: (task: Task) => Promise<Content>;
         taskWorklogs: (taskId: string | number) => Promise<Content>;
-        taskWorklogsSet: (taskId: string | number, status: "start" | "pause" | "end") => Promise<Content>;
+        taskWorklogsSet: (taskId: string | number, status: "start" | "end" | "pause") => Promise<Content>;
     };
 }
