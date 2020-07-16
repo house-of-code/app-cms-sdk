@@ -138,8 +138,8 @@ export class AppCMSClient<Content> {
 
     get content() {
         return {
-            fetch: (locale: string): Promise<Content> => {
-                return this.makeRequest(this.generateURL(`/content/${locale}`))
+            fetch: (): Promise<Content> => {
+                return this.makeRequest(this.generateURL(`/content/${this.language}`))
             },
             file: (fileId: string) => {
                 return this.makeRequest(this.generateURL(`/content/file/${fileId}`))
@@ -147,8 +147,8 @@ export class AppCMSClient<Content> {
         }
     }
 
-    translations = (locale: string) => {
-        return this.makeRequest("/translated_texts/" + this.language)
+    translations = () => {
+        return this.makeRequest(this.generateURL("/translated_texts/" + this.language))
     }
 
 

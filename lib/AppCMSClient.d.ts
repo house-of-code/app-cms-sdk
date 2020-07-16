@@ -14,18 +14,18 @@ export declare class AppCMSClient<Content> {
     setAccessToken: (token: string) => void;
     private generateURL;
     private makeRequest;
-    get analytics(): {
+    readonly analytics: {
         log: (event: string, platform: string, deviceId: string, data?: string) => Promise<Content>;
     };
-    get appConfig(): {
+    readonly appConfig: {
         fetch: () => Promise<Content>;
     };
-    get content(): {
-        fetch: (locale: string) => Promise<Content>;
+    readonly content: {
+        fetch: () => Promise<Content>;
         file: (fileId: string) => Promise<Content>;
     };
-    translations: (locale: string) => Promise<Content>;
-    get vinduesgrossisten(): {
+    translations: () => Promise<Content>;
+    readonly vinduesgrossisten: {
         login: (accessKey: string) => Promise<Content>;
         tasks: (date: string) => Promise<Content>;
         taskUpdate: (taskId: string, values: {
@@ -45,7 +45,7 @@ export declare class AppCMSClient<Content> {
         }): Promise<Content>;
         taskDeleteDocumentation(taskId: string | number, documentationId: string | number): Promise<Content>;
     };
-    get cphtrucking(): {
+    readonly cphtrucking: {
         login: (accessKey: string) => Promise<Content>;
         customers: () => Promise<Content>;
         tasks: (date: string) => Promise<Content>;
@@ -74,6 +74,6 @@ export declare class AppCMSClient<Content> {
         workshiftEnd: () => Promise<Content>;
         taskCreate: (task: Task) => Promise<Content>;
         taskWorklogs: (taskId: string | number) => Promise<Content>;
-        taskWorklogsSet: (taskId: string | number, status: "start" | "end" | "pause") => Promise<Content>;
+        taskWorklogsSet: (taskId: string | number, status: "start" | "pause" | "end") => Promise<Content>;
     };
 }
