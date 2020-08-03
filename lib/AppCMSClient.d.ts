@@ -2,26 +2,30 @@ import * as FormData from 'form-data';
 export interface AppCMSClientConfig {
     apiKey: string;
     baseUrl?: string;
+    language?: string;
 }
 export declare class AppCMSClient<Content> {
     private clientConfig;
     private baseURL;
     private accessToken;
+    private language;
     constructor(clientConfig: AppCMSClientConfig);
+    setLanguage: (language: string) => void;
     setAccessToken: (token: string) => void;
     private generateURL;
     private makeRequest;
-    get analytics(): {
+    readonly analytics: {
         log: (event: string, platform: string, deviceId: string, data?: string) => Promise<Content>;
     };
-    get appConfig(): {
+    readonly appConfig: {
         fetch: () => Promise<Content>;
     };
-    get content(): {
-        fetch: (locale: string) => Promise<Content>;
+    readonly content: {
+        fetch: () => Promise<Content>;
         file: (fileId: string) => Promise<Content>;
     };
-    get vinduesgrossisten(): {
+    translations: () => Promise<Content>;
+    readonly vinduesgrossisten: {
         login: (accessKey: string) => Promise<Content>;
         tasks: (date: string) => Promise<Content>;
         taskUpdate: (taskId: string, values: {
@@ -41,7 +45,7 @@ export declare class AppCMSClient<Content> {
         }): Promise<Content>;
         taskDeleteDocumentation(taskId: string | number, documentationId: string | number): Promise<Content>;
     };
-    get cphtrucking(): {
+    readonly cphtrucking: {
         login: (accessKey: string) => Promise<Content>;
         customers: () => Promise<Content>;
         tasks: (date: string) => Promise<Content>;

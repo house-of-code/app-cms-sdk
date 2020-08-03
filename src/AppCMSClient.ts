@@ -5,6 +5,7 @@ import * as querystring from 'query-string'
 export interface AppCMSClientConfig {
     apiKey: string
     baseUrl?: string
+    language?: string
 
 }
 
@@ -12,17 +13,26 @@ export class AppCMSClient<Content> {
 
     private baseURL: string = "https://www.appcms.dk"
     private accessToken: string = ''
+    private language: string = 'en'
 
     constructor(
-        private clientConfig: AppCMSClientConfig
+        private clientConfig: AppCMSClientConfig,
     ) {
 
         if(clientConfig.baseUrl) {
             this.baseURL = clientConfig.baseUrl
         }
 
+        if(clientConfig.language) {
+            this.language = clientConfig.language
+        }
+
         this.accessToken = ''
 
+    }
+
+    public setLanguage = (language: string) => {
+        this.language = language
     }
 
     public setAccessToken = (token: string) => {
@@ -128,13 +138,17 @@ export class AppCMSClient<Content> {
 
     get content() {
         return {
-            fetch: (locale: string): Promise<Content> => {
-                return this.makeRequest(this.generateURL(`/content/${locale}`))
+            fetch: (): Promise<Content> => {
+                return this.makeRequest(this.generateURL(`/content/${this.language}`))
             },
             file: (fileId: string) => {
                 return this.makeRequest(this.generateURL(`/content/file/${fileId}`))
             }
         }
+    }
+
+    translations = () => {
+        return this.makeRequest(this.generateURL("/translated_texts/" + this.language))
     }
 
 
@@ -290,7 +304,7 @@ export class AppCMSClient<Content> {
             },
             taskWorklogsSet: (taskId: number|string, status: 'start' | 'pause' | 'end' ) => {
                 return this.makeRequest(this.generateURL(`/cphtrucking/tasks/${taskId}/work_logs/${status}`), 'post')
-            } 
+            }
         }
     }
 
