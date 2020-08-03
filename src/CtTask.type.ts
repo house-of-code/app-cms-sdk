@@ -9,6 +9,7 @@ declare interface Task {
     task_name: string
     task_type: string
     is_delayed: boolean
+    ct_task_name_id: number
     ct_customer: {
         id: number
         name: string

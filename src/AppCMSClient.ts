@@ -221,6 +221,9 @@ export class AppCMSClient<Content> {
             tasks: (date: string) => {
                 return this.makeRequest(this.generateURL(`/cphtrucking/tasks?date=${date}`))
             },
+            taskNames: () => {
+                return this.makeRequest(this.generateURL(`/cphtrucking/task_names`))
+            },
             taskUpdate: (taskId: string, values: {note?: string, materials?: string}) => {
                 return this.makeRequest(this.generateURL(`/cphtrucking/tasks/${taskId}`), "patch", values)
             },
@@ -284,9 +287,9 @@ export class AppCMSClient<Content> {
             },
             taskCreate: (task: Task) => {
                 return this.makeRequest(this.generateURL(`/cphtrucking/tasks`), "post", {ct_task: {
+                    ct_task_name_id: task.ct_task_name_id,
                     task_date: task.task_date,
                     ct_customer_id: task.ct_customer.id,
-                    task_name: task.task_name,
                     ct_status_id: task.status_note.ct_status.id,
                     ct_status_note: task.status_note.note,
                     ct_order_type_id: null,
