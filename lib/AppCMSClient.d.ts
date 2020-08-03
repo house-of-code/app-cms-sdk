@@ -68,12 +68,13 @@ export declare class AppCMSClient<Content> {
         taskStart: (taskId: string | number) => Promise<Content>;
         taskEnd: (taskId: string | number) => Promise<Content>;
         addresses: () => Promise<Content>;
+        contactPersons: () => Promise<Content>;
         workshiftCurrent: () => Promise<Content>;
         workshiftIndex: () => Promise<Content>;
         workshiftStart: () => Promise<Content>;
         workshiftEnd: () => Promise<Content>;
         taskCreate: (task: Task) => Promise<Content>;
         taskWorklogs: (taskId: string | number) => Promise<Content>;
-        taskWorklogsSet: (taskId: string | number, status: "start" | "pause" | "end") => Promise<Content>;
+        taskWorklogsSet: (taskId: string | number, status: "end" | "pause" | "start") => Promise<Content>;
     };
 }

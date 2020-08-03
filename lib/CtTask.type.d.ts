@@ -28,8 +28,11 @@ declare interface Task {
     }>;
     note: string;
     order_pdf: string;
-    contact_person: string;
-    contact_phone: string;
+    contact_person: {
+        id: number;
+        name: string;
+        phone_number: string;
+    };
     deliver_address: {
         id: number;
         name: string;
