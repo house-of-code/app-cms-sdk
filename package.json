@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "form-data": "^3.0.0",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.7",
     "node-filelist": "^1.0.0",
     "query-string": "^6.11.0"
   }
